@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>COVID-19 Treemap</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- Create a dropdown for dataset selection -->
+<label for="datasetSelect">Select Dataset:</label>
+<select id="datasetSelect">
+    <option value="stateDeath">State Death</option>
+    <option value="stateAffected">State Affected</option>
+</select>
+
+<!-- Container for the Treemap -->
+<div id="treemap-container"></div>
+
+<script src="https://d3js.org/d3.v5.min.js"></script>
+<script src="script.js"></script>
+
+</body>
+</html>
