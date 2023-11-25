@@ -24,19 +24,54 @@
             .catch(error => console.error('Error fetching data:', error));
 
         function createTreeMap(data) {
-            // Use D3.js to create the tree map
-            // Modify the code based on the structure of your data
-            // Reference: https://observablehq.com/@d3/treemap
+            // Assuming data has the following structure:
+            // { WorldRegion: '...', Country: '...', LocationText: '...', Location: '...', Decommisioned: '...', TaxReturnsFiled: '...', EstimatedPopulation: '...', TotalWages: '...', AvgWages: '...', Notes: '...' }
 
-            const width = 800;
-            const height = 600;
+            // Create a hierarchy using D3's hierarchy() function
+            const hierarchyData = d3.stratify()
+                .id(d => `${d.WorldRegion}-${d.Country}`)
+                .parentId(d => d.WorldRegion)
+                (data);
 
+            const root = d3.hierarchy(hierarchyData);
+
+            // Use D3's treemap() function to generate the layout
+            const treemap = d3.treemap()
+                .size([800, 600])
+                .padding(1);
+
+            treemap(root);
+
+            // Create an SVG element
             const svg = d3.select('body')
                 .append('svg')
-                .attr('width', width)
-                .attr('height', height);
+                .attr('width', 800)
+                .attr('height', 600);
 
-            // Your D3.js code here to create the tree map using the fetched data
+            // Append rectangles to represent the tree map
+            svg.selectAll('rect')
+                .data(root.descendants())
+                .enter()
+                .append('rect')
+                .attr('x', d => d.x0)
+                .attr('y', d => d.y0)
+                .attr('width', d => d.x1 - d.x0)
+                .attr('height', d => d.y1 - d.y0)
+                .style('stroke', 'white')
+                .style('fill', 'steelblue');
+
+            // Add text labels
+            svg.selectAll('text')
+                .data(root.descendants())
+                .enter()
+                .append('text')
+                .attr('x', d => (d.x0 + d.x1) / 2)
+                .attr('y', d => (d.y0 + d.y1) / 2)
+                .attr('dy', '0.35em')
+                .attr('text-anchor', 'middle')
+                .style('font-size', '10px')
+                .style('fill', 'white')
+                .text(d => `${d.data.WorldRegion} - ${d.data.Country}`);
         }
     </script>
 
