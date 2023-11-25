@@ -3,23 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>COVID-19 Treemap</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Tree Map with D3.js</title>
+    <style>
+        /* Add your CSS styles here */
+    </style>
 </head>
 <body>
 
-<!-- Create a dropdown for dataset selection -->
-<label for="datasetSelect">Select Dataset:</label>
-<select id="datasetSelect">
-    <option value="stateDeath">State Death</option>
-    <option value="stateAffected">State Affected</option>
-</select>
+    <!-- Include D3.js library -->
+    <script src="https://d3js.org/d3.v5.min.js"></script>
 
-<!-- Container for the Treemap -->
-<div id="treemap-container"></div>
+    <script>
+        // Fetch data from the server
+        fetch('getData.php')
+            .then(response => response.json())
+            .then(data => {
+                // Process data and create tree map using D3.js
+                createTreeMap(data);
+            })
+            .catch(error => console.error('Error fetching data:', error));
 
-<script src="https://d3js.org/d3.v5.min.js"></script>
-<script src="script.js"></script>
+        function createTreeMap(data) {
+            // Use D3.js to create the tree map
+            // Modify the code based on the structure of your data
+            // Reference: https://observablehq.com/@d3/treemap
+
+            const width = 800;
+            const height = 600;
+
+            const svg = d3.select('body')
+                .append('svg')
+                .attr('width', width)
+                .attr('height', height);
+
+            // Your D3.js code here to create the tree map using the fetched data
+        }
+    </script>
 
 </body>
 </html>
